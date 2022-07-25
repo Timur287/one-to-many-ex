@@ -5,10 +5,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -26,8 +26,21 @@ public class Country {
     @NotNull
     Long population;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="country_id")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "country")
     List<City> cities;
 
+
+    public void addCity(City city){
+        cities.add(city);
+        city.setCountry(this);
+    }
+
+    public void removeCity(City city){
+        cities.remove(city);
+        city.setCountry(null);
+    }
+
+    public Country(){
+        cities = new ArrayList<>();
+    }
 }

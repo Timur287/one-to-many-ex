@@ -18,7 +18,15 @@ public class CityRepository {
     private EntityManager entityManager;
 
     @Transactional
-    public City saveCity(City city){
+    public City saveCity(City city, Long country_id){
+        Country country = entityManager.find(Country.class, country_id);
+        country.addCity(city);
+        entityManager.persist(country);
+        return city;
+    }
+
+    @Transactional
+    public City saveCityWithoutCountry(City city) {
         entityManager.persist(city);
         return city;
     }
@@ -49,4 +57,5 @@ public class CityRepository {
         Query query = entityManager.createQuery("delete from City");
         return query.executeUpdate();
     }
+
 }

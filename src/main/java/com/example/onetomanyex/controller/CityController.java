@@ -17,8 +17,13 @@ public class CityController {
 
 
     @PostMapping("/save")
-    public City saveCity(@RequestBody City city){
-        return cityRepository.saveCity(city);
+    public City saveCity(@RequestBody City city, @RequestParam Long country_id){
+        return cityRepository.saveCity(city,country_id);
+    }
+
+    @PostMapping("/saveCityWithoutCountry")
+    public City saveCityWithoutCountry(@RequestBody City city){
+        return cityRepository.saveCityWithoutCountry(city);
     }
 
     @PutMapping("/update")
